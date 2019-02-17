@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Домашнее задание № 5}
+\author{Иван Нечепуренко }
+\date{September 2018}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Работа с картинками
+\usepackage{graphicx}  % Для вставки рисунков
+\graphicspath{{images/}}  % папки с картинками
+\setlength\fboxsep{3pt} % Отступ рамки \fbox{} от рисунка
+\setlength\fboxrule{1pt} % Толщина линий рамки \fbox{}
+\usepackage{wrapfig} % Обтекание рисунков и таблиц текстом
+
+\begin{document}
+Заметим, что из невырожденности $A$ следует:
+
+$$\sum\limits_i \alpha_ip_i = 0 \Leftrightarrow A(\sum\limits_i \alpha_ip_i  ) = 0
+\Leftrightarrow 
+\sum\limits_i \alpha_iAp_i = 0 $$
+Прямо отсюда следует, что условия линейной независимости векторов $\{Ap_i\}$ и $\{p_i\}$ эквивалентны.
+Теперь предположим, что 
+$$ \sum\limits_i\alpha_iAp_i = 0, \exists \alpha_i \neq 0$$
+Домножим выражение слева на $p_i^T$, получим
+$$ \alpha_ip_i^TAp_i = 0$$
+$$ p_i^TAp_i = 0$$
+Но тогда, так как $A \in \mathbb{S}^n_{++}$, $p_i = 0$, а это проворечит условию. Но тогда
+$\{Ap_i\}$, и соответственно, $\{p_i\}$, линейно независимы.
+
+Задача 1
+Проверьте, что направления в методе сопряжённых градиентов для квадратичной целевой функции и в методе Флетчера-Ривса являются направлениями убывания. Для любой ли стратегии линейного поиска шага в методе Флетчера-Ривса полученное направление будет направлением убывания? Почему?
+
+Даёт ли процедура дробления шага шаг, удовлестворябщий условию Вольфа? Если нет, то почему и как её нужно модифицировать, чтобы найти шаг, удовлетворяющий условию Вольфа?
+
+В доказательстве градиентного спуска для квадратичной функции опираемся на утверждения и определения из лекционной презентации. Расписываем выражение $f(x_{k + 1}) - f(x_k)$ в лоб:
+$$f(x_{k + 1}) - f(x_k) = \frac{x_{k + 1}Ax_{k + 1} - x_kAx_k}{2} - b^T(x_{k + 1} - x_k) = 
+\{ x_{k + 1} = x_k + \alpha_k x_k \} = $$
+$$ = \alpha_k x_k^T A p_k + \frac{\alpha_k^2 p_k^TAp_k}{2} - \alpha_k b^T p_k = 
+\alpha_k ((x_k^T A - b^T) p_k + \alpha_k \frac{p_k^TAp_k}{2} )
+$$
+Теперь пользуемся тем, что $Ax_k - b = r_k$, $ \displaystyle \alpha_k = \frac{r_k^T r_k}{p_k^T A p_k} $
+$$f(x_{k + 1}) - f(x_k) = \alpha_k(r_k^Tp_k + \frac{r^T_kr_k}{2} )
+= \alpha_k(-r^T_k r_k + \frac{r^T_kr_k}{2} )  =  - \alpha_k \frac{r^T_kr_k}{2}  \leq 0$$
+При этом равенство будет достигаться только при $r_k = 0$, т. е. в целевой точке.
+\end{document}

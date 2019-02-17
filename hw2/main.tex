@@ -1,0 +1,203 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Домашнее задание № 2}
+\author{Иван Нечепуренко }
+\date{September 2018}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+\begin{document}
+
+\maketitle
+
+\section{Задача 1} Для начала найдем градиент по U:
+
+$ \displaystyle
+\frac{\partial \|UV - Y\|^2_F}{\partial u_{i, j}} = \frac{\partial}{\partial u_{i, j}}
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n(\sum\limits_{r = 1}^n
+u_{p, r}v_{r, q} - y_{p, q})^2 = 
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n 
+ \frac{\partial}{\partial u_{i, j}}
+(\sum\limits_{r = 1}^n
+u_{p, r}v_{r, q} - y_{p, q})^2 
+= \sum\limits_{p = 1}^n\sum\limits_{q = 1}^n 
+ \frac{\partial}{\partial u_{i, j}}
+(\sum\limits_{r = 1}^nu_{p, r}v_{r, q} - y_{p, q})^2 =
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n 
+2(\sum\limits_{r = 1}^nu_{p, r}v_{r, q} - y_{p, q})
+ \frac{\partial}{\partial u_{i, j}}(\sum\limits_{r = 1}^nu_{p, r}v_{r, q} - y_{p, q}) =
+ \sum\limits_{p = 1}^n\sum\limits_{q = 1}^n 
+2(\sum\limits_{r = 1}^nu_{p, r}v_{r, q} - y_{p, q})
+Id(p = i)v_{j, q} =
+\sum\limits_{q = 1}^n 
+2(\sum\limits_{r = 1}^nu_{i, r}v_{r, q} - y_{i, q})v_{j, q} 
+$
+
+Очевидно, что:
+
+$\displaystyle  \frac{\partial \|UV - Y\|^2_F}{\partial U } = 2(UV -Y)V^T$
+
+А также:
+
+$\displaystyle
+\frac{\partial (\|U\|^2_F + \|V\|^2_F}{\partial u_{i, j}} = 
+\frac{\partial \|U\|^2_F}{\partial u_{i, j}} = 
+\frac{\partial}{\partial u_{i, j}}
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n(\sum\limits_{r = 1}^nu_{p, r}u_{r, q})^2 =
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n
+\frac{\partial}{\partial u_{i, j}}(\sum\limits_{r = 1}^nu_{p, r}u_{r, q})^2 = %\nonumber\\ =
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n
+2(\sum\limits_{r = 1}^nu_{p, r}u_{r, q})
+\frac{\partial}{\partial u_{i, j}}(\sum\limits_{r = 1}^nu_{p, r}u_{r, q}) = 
+\sum\limits_{p = 1}^n\sum\limits_{q = 1}^n 2 (\sum\limits_{r = 1}^nu_{p, r}u_{r, q})
+(Id(p = i)u_{j, q} + u_{p, i}Id(q = j)) = 
+2 \sum\limits_{q = 1}^n (\sum\limits_{r = 1}^nu_{i, r}u_{r, q}) u_{j, q} + 
+2 \sum\limits_{p = 1}^n (\sum\limits_{r = 1}^nu_{p, r}u_{r, j})u_{p, i}
+$
+
+Получаем:
+
+$\displaystyle
+\frac{\partial (\|U\|^2_F + \|V\|^2_F}{\partial U} = 
+2(UUU^T + U^TUU)
+$
+
+И, наконец, 
+
+$\displaystyle
+\frac{\partial }{\partial U}
+(\|UV - Y\|^2_F + \frac{\lambda}{2}(\|U\|^2_F + \|V\|^2_F))= 
+2(UV -Y)V^T + \lambda(UUU^T + U^TUU)
+$
+
+По аналогии 
+
+$\displaystyle
+\frac{\partial }{\partial V}
+(\|UV - Y\|^2_F + \frac{\lambda}{2}(\|U\|^2_F + \|V\|^2_F))= 
+2U^T(UV -Y) + \lambda(VVV^T + V^TVV7)
+$
+
+\section{Задача 2}  
+$\displaystyle
+\frac{\partial f(w)}{\partial w_k} = 
+\frac{\partial}{\partial w_k} 
+\sum\limits_{i = 1}^m
+log(1 + e^{-y_iw^Tx_i})
+= \sum\limits_{i = 1}^m 
+\frac{-y_ix_{k, i}  e^{-y_iw^Tx_i}}{1 + e^{-y_iw^Tx_i}} = 
+\sum\limits_{i = 1}^m 
+-\frac{y_ix_{k, i}}{1 + e^{y_iw^Tx_i}}
+$,
+где $X$ - это матрица, столбцами которой являются $x_i$.
+Отсюда переходим к матричной форме:
+
+$\displaystyle
+\Delta_w f(w) = 
+\sum\limits_{i = 1}^m 
+-x_i\frac{y_i}{1 + e^{y_iw^Tx_i}}
+$
+
+Далее, ищем гессиан. Абсолютно аналогично получается, что 
+
+$\displaystyle
+\frac{\partial^2 f(w)}{\partial w_kw_q} = 
+\frac{\partial}{\partial w_q} \sum\limits_{i = 1}^m 
+-\frac{y_ix_{k, i}}{1 + e^{y_iw^Tx_i}} = 
+\sum\limits_{i = 1}^m 
+\frac{y_ix_{k, i}y_ix_{q, i}e^{y_iw^Tx_i}}{(1 + e^{y_iw^Tx_i})^2} = 
+\sum\limits_{i = 1}^m 
+\frac{y_i^2x_{k, i}x_{q, i}e^{y_iw^Tx_i}}{(1 + e^{y_iw^Tx_i})^2}
+$
+Сам гессиан:
+$ \displaystyle \sum\limits_{i = 1}^m  x_i x_i^T 
+\frac{y_i^2e^{y_iw^Tx_i}}{(1 + e^{y_iw^Tx_i})^2}
+$
+
+\section{Задача 3} 
+$$\frac{\partial f_j(w)}{\partial \omega_k} = Id(j = k) 
+\frac{e^{\omega_j}}{\sum\limits_{i=1}^n e^{\omega_i}} - 
+\frac{e^{\omega_j}e^{\omega_j}}{(\sum\limits_{i=1}^n e^{\omega_i})^2} $$
+
+Отсюда можно получить матрицу Якоби: $J = -f(w)f(w)^T + diag(f_i(w))$.
+\section{Задача 4}
+Полагаем все матрицы невырожденными, иначе, разумеется, задача не имеет смысла.
+
+\begin{align*} 
+	E  &= (A + UCV)(A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1})\\ 
+    E  &=E - U(C^{-1} + VA^{-1}U)^{-1}VA^{-1} + UCVA^{-1} - UCVA^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1} \\ 
+    UCVA^{-1} &= U(C^{-1} + VA^{-1}U)^{-1}VA^{-1} + UCVA^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}  \\ 
+    C  &= (C^{-1} + VA^{-1}U)^{-1} + CVA^{-1}U(C^{-1} + VA^{-1}U)^{-1} \\
+    E + CVA^{-1}U  &= C(C^{-1} + VA^{-1}U) \\
+    CVA^{-1}U &= CVA^{-1}U
+\end{align*}
+
+\section{Задача 5} $$grad(x)_k = \frac{\partial }{\partial x_k} 
+\frac{\sum\limits_{i, j = 1}^nx_ix_ja_{i, j}}{\sum\limits_{i = 1}^nx_i^2} = 
+\frac{x^Tx(\sum\limits_{i = 1}^nx_ia_{i, k} + \sum\limits_{j = 1}^nx_ja_{k, j})
+- (x^TAx)2x_i}{(x^Tx)^2}$$
+Это же выражение можно переписать в матричном виде:
+$\displaystyle (\nabla, f(x)) = \\ = \frac {(x^Tx)(A + A^T)x - 2(x^TAx)x}{(x^Tx)^2} =
+2\frac {(x^Tx)A - (x^TAx)}{(x^Tx)^2}x = 
+2\frac{A - f(x) }{(xx^T)}x
+$
+
+Максимальное значение отношения Релея - и есть максимальное собственное знвачение матрицы. Действительно, известно, что симметричная матрица имеет только положительные собственные значения, и сушествует ортонормированный базис из собственных векторов $v_1, .. , v_n$. Пусть $x = x_1v_1 + .. + x_nv_n$.  Имеем:
+$$ \frac{x^TAx}{x^Tx} = \frac{\sum\limits_{i = 1}^n \lambda_i(x_i)^2}{\sum\limits_{i = 1}^n (x_i)^2}$$ Очевидно, что это взвешенное среднее достигает максимум, равный $\max\limits_{i = 1 .. n} \lambda_i$
+
+\section{Задача 6}
+Для решения обеих частей задачи удобно воспользоваться теоремой Виета для характеристичесекого многочнлена марицы. Как известно (опустим выкладки, они приведены в учебнике Беклемишева), $det(A - \lambda E) = 
+(-1)^n\lambda^n + (-1)^{n - 1}\lambda^{n - 1}\sum\limits_{i = 1}^na_{i, i} + .. +
+det(A).
+$ В то же время имеем по обобщеннной теореме Виета ($b_n - n-$й коэффициент уравнения):
+$$ \sum\limits_{i = 1}^n \lambda_i = \frac{-b_1}{b_0} =
+\sum\limits_{i = 1}^na_{i, i}
+$$
+И отсюда сразу следует:
+$$ grad(\sum\limits_{i = 1}^n \lambda_i) = E$$
+А также 
+$$ \prod\limits_{i = 1}^n \lambda_i = (-1)^n\frac{b_n}{b_0} = det(A)$$
+И, по формуле, доказанной на семинаре:
+$$ grad( \prod\limits_{i = 1}^n \lambda_i) = det(A)(A^{-1})^T$$
+\section{Задача 7}
+Сначала запишем выражение для самого логарифма.
+
+$\displaystyle f =  ln(p) = Nln\frac{1}{(2\pi)^{n/2}\sqrt{det(\Sigma)}} - \frac{1}{2}
+\sum\limits_{i = 1}^N(x_i - \eta)^T\Sigma^{-1}(x_i - \eta) = 
+ -\frac{1}{2}Nln(det(\Sigma)) - \frac{1}{2}
+\sum\limits_{i = 1}^N(x_i - \eta)^T\Sigma^{-1}(x_i - \eta) + C 
+$
+
+Ищем градиент по $\eta$:
+
+$\displaystyle
+\frac{\partial }{\partial \eta_k} (x_i - \eta)^T\Sigma^{-1}(x_i - \eta) =
+ \frac{\partial }{\partial \eta_k} \sum\limits_{j, p = 1}^n (\Sigma^{-1})_{j, p}
+(x_{i, j} - \eta_{j})(x_{i, p} - \eta_{p}) =
+  - \sum\limits_{p = 1}^{n} (\Sigma^{-1})_{k, p}(x_{i, p} - \eta_{p}) -  \sum\limits_{j = 1}^{n} (\Sigma^{-1})_{j, k}(x_{i, j} - \eta_{j}) 
+=
+- (\Sigma^{-1})_k(x_i - \eta) - (\Sigma^{-1})^T_k(x_i - \eta) =
+- (\Sigma^{-1} + (\Sigma^{-1})^T)_k(x_i - \eta) = -2 \Sigma^{-1}_k(x_i - \eta)
+$
+
+Здесь $A_k$ - $k$-я строка матрицы $A$. И уже отсюда легко выводится градиент по $\eta$:
+$\displaystyle \Delta_\eta f = N\Sigma^{-1}(\overline{x} - \eta),
+
+где $\overline{x}$ - среднее векторов $x$.
+
+Теперь же вычисляем градиент по $\Sigma$. Используем алгебраическое равенство $v^TAv = tr(Avv^T) $(обе части равны $\sum\limits_{i, j = 1}^na_{i, q}v_iv_j$). Тогда имеем
+$\displaystyle
+\Delta_\Sigma f = -\frac{1}{2}(N\Delta_\Sigma ln(det(\Sigma)) + \Delta_\Sigma( \sum\limits_{i = 1}^N (x_i - \eta)^T\Sigma^{-1}(x_i - \eta))) = 
+%-\frac{1}{2}(\sum\limits_{i = 1}^N N\Delta_\Sigma( 
+%(x_i - \eta)^T\Sigma^{-1}(x_i - \eta)) + N\Delta_\Sigma ln(det(\Sigma))) =
+-\frac{1}{2}(\sum\limits_{i = 1}^N \Delta_\Sigma( 
+\Sigma^{-1}(x_i - \eta)(x_i - \eta)^T) - \frac{1}{2}
+N\frac{\Delta_\Sigma(det(\Sigma)))}{det(\Sigma)} =
+\frac{1}{2}(\Sigma^{-1}(\sum\limits_{i = 1}^N(x_i - \eta)(x_i - \eta)^T) \Sigma^{-1})^T
+- \frac{1}{2}N(\Sigma^{-1})^T
+$
+\end{document}
